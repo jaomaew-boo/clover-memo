@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLO'VER Digital Archive 🍀✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Mitr:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* --- 🌸 ตัวแปรสีระบบ Light Pastel (สว่าง คลีน ละมุน) --- */
+        :root {
+            --bg-main: #FDFBF7;      
+            --bg-card: #FFFFFF;      
+            --pink-pastel: #FFB7CE;  
+            --blue-pastel: #AEE2FF;  
+            --green-pastel: #B7E4C7; 
+            --purple-pastel: #CDB4DB;
+            --text-main: #4A4A4A;    
+            --text-gray: #8A8A8A;    
+            --green-clover: #439A6A; 
+            --text-light: #6A6A6A;   
+        }
+
+        /* --- 🌍 รีเซ็ตสไตล์หลักของหน้าเว็บ --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 80% 10%, rgba(183, 228, 199, 0.2) 0%, transparent 40%),
+                              radial-gradient(circle at 20% 90%, rgba(174, 226, 255, 0.15) 0%, transparent 40%);
+        }
+
+        h1, h2, h3, h4, h5 { font-family: 'Mitr', sans-serif; color: var(--text-main); }
+
+        /* --- 🎬 Header / Cover Section --- */
+        header {
+            min-height: 55vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 3rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- 🎬 Header Collage --- */
+        .pastel-collage {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 850px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .collage-item {
+            width: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(183, 228, 199, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .collage-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(183, 228, 199, 0.6);
+        }
+
+        .main-pic { grid-row: 1 / span 2; height: 400px; }
+        .sub-pic { height: 192px; }
+        
+        .header-logo {
+            font-size: 3.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #439A6A, #8CB9F1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            z-index: 10;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            border-bottom: 2px dashed var(--green-pastel);
+            padding-bottom: 5px;
+            display: inline-block;
+            z-index: 10;
+        }
+
+        .tag-badge {
+            background: var(--green-clover);
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .container { max-width: 950px; margin: 0 auto; padding: 0 1.5rem 5rem 1.5rem; }
+
+        /* --- 🌀 MODERN ACCORDION SYSTEM --- */
+        .dropdown-wrapper {
+            margin-bottom: 1.5rem; background-color: var(--bg-card);
+            border-radius: 16px; border: 1px solid rgba(0, 0, 0, 0.03);
+            overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+        .dropdown-btn {
+            width: 100%; background: transparent; border: none; padding: 1.5rem;
+            color: var(--text-main); font-size: 1.2rem; font-family: 'Mitr', sans-serif;
+            text-align: left; cursor: pointer; display: flex; justify-content: space-between;
+            align-items: center; transition: background 0.3s ease;
+        }
+        .dropdown-btn:hover { background: rgba(183, 228, 199, 0.1); color: var(--green-clover); }
+        .dropdown-icon { font-size: 1rem; transition: transform 0.3s ease; color: var(--green-clover); }
+        .dropdown-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .dropdown-inner { overflow: hidden; background: #FAFAFA; transition: padding 0.3s ease; padding: 0 1.5rem; }
+        
+        .dropdown-wrapper.active { border-color: var(--green-pastel); box-shadow: 0 10px 25px rgba(183, 228, 199, 0.2); }
+        .dropdown-wrapper.active > .dropdown-content { grid-template-rows: 1fr; }
+        .dropdown-wrapper.active > .dropdown-content > .dropdown-inner { padding: 1.5rem; }
+        .dropdown-wrapper.active .dropdown-icon { transform: rotate(180deg); }
+
+        /* Series Items (For Activities) */
+        .series-list { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 15px;}
+        .series-item { background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.06); border-radius: 8px; overflow: hidden; }
+        .series-title-btn { width: 100%; background: transparent; border: none; padding: 12px 15px; color: var(--text-main); font-size: 0.95rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .series-arrow { font-size: 0.8rem; color: var(--text-gray); transition: transform 0.3s ease; }
+        .series-detail { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.3s ease; }
+        .series-detail-inner { overflow: hidden; background: #FCFCFC; padding: 0 15px; }
+        .series-item.active { border-color: var(--green-pastel); }
+        .series-item.active > .series-detail { grid-template-rows: 1fr; }
+        .series-item.active > .series-detail > .series-detail-inner { padding: 15px; border-top: 1px dashed rgba(0, 0, 0, 0.05); }
+        .series-item.active .series-arrow { transform: rotate(180deg); color: var(--green-clover); }
+
+        /* --- Members & Gallery Grid --- */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .member-card {
+            background: #FFFFFF; border-radius: 12px; padding: 1.5rem; text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: transform 0.3s ease;
+        }
+        .member-card:hover { transform: translateY(-5px); }
+        .member-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 3px solid; }
+        .m-barcode img { border-color: var(--pink-pastel); }
+        .m-keen img { border-color: var(--blue-pastel); }
+        .m-ashi img { border-color: var(--purple-pastel); }
+        .m-aungpao img { border-color: var(--green-pastel); }
+        
+        .member-card h3 { font-size: 1.2rem; margin-bottom: 5px; }
+        .member-card p { font-size: 0.85rem; color: var(--text-gray); margin-bottom: 5px; line-height: 1.4; }
+        .member-card .m-role { color: var(--green-clover); font-weight: 600; font-size: 0.8rem; background: rgba(183, 228, 199, 0.3); padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+
+        /* General UI components */
+        .work-btn-link { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 600; border-bottom: 1px dashed; transition: all 0.3s ease; font-size: 0.88rem; color: #5B9FE5; border-bottom-color: #5B9FE5; margin-top: 5px;}
+        .work-btn-link:hover { opacity: 0.7; }
+        
+        .clover-songs-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 15px; }
+        .clover-song-item { background: rgba(183, 228, 199, 0.1); border: 1px dashed rgba(183, 228, 199, 0.8); border-radius: 8px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
+        .clover-song-title { font-size: 0.95rem; font-weight: 600; color: var(--text-main); }
+        .clover-song-date { font-size: 0.75rem; color: var(--text-gray); }
+
+        .event-timeline { display: flex; flex-direction: column; gap: 1.25rem; text-align: left; margin-top: 15px; }
+        .event-item { background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.05); border-radius: 10px; padding: 1rem; display: flex; flex-direction: column; gap: 0.4rem; border-left: 4px solid var(--green-pastel); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .event-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; color: var(--green-clover); }
+        .event-title { font-size: 0.95rem; font-weight: 600; color: var(--text-main); }
+        .event-desc { font-size: 0.8rem; color: var(--text-gray); line-height: 1.4; }
+
+        /* Social */
+        .social-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 15px; }
+        .btn-social { background: #FDFBF7; color: var(--text-main); border: 1px solid rgba(0,0,0,0.08); padding: 0.4rem 0.8rem; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-social:hover { background: var(--green-clover); color: #FFF; border-color: var(--green-clover); }
+
+        /* Special / Gallery Layouts */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 15px; }
+        .gallery-item { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; background-color: #EEE; }
+        .special-card { background: linear-gradient(135deg, rgba(255, 183, 206, 0.1), rgba(183, 228, 199, 0.2)); border: 1px dashed var(--pink-pastel); border-radius: 12px; padding: 2rem; text-align: center; margin-top: 15px; }
+
+        @media (max-width: 768px) {
+            .pastel-collage { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+            .main-pic { grid-column: 1 / span 2; height: 300px; }
+            .sub-pic { height: 150px; }
+            .clover-song-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+        .site-footer { padding: 20px; color: var(--text-gray); font-size: 0.85rem; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <!-- 01 HOME: หน้าปก (Digital Archive Cover) -->
+    <header>
+        <div class="tag-badge">01 HOME</div>
+        <h1 class="header-logo">CLO'VER<br>DIGITAL ARCHIVE</h1>
+        <div class="subtitle">1st Anniversary & Memories 🍀✨ (Fan-Made)</div>
+        
+        <div class="pastel-collage">
+            <img src="images/clover-group.jpg" alt="CLO'VER Group" class="collage-item main-pic" onerror="this.src='https://placehold.co/500x400/FDFBF7/B7E4C7?text=CLO\'VER+Group'">
+            <img src="images/clover-moment1.jpg" alt="Moment 1" class="collage-item sub-pic" onerror="this.src='https://placehold.co/300x190/FDFBF7/CDB4DB?text=Moment+1'">
+            <img src="images/clover-moment2.jpg" alt="Moment 2" class="collage-item sub-pic" onerror="this.src='https://placehold.co/300x190/FDFBF7/AEE2FF?text=Moment+2'">
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- 02 ABOUT CLO'VER -->
+        <div class="dropdown-wrapper">
+            <button class="dropdown-btn">
+                <span>02 🍀 ABOUT CLO'VER</span>
+                <span class="dropdown-icon">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-inner">
+                    <div style="text-align: center; margin-bottom: 2rem; margin-top: 1rem;">
+                        <h2>T-POP Boy Group from RISER MUSIC</h2>
+                        <p style="color: var(--text-gray); font-size: 0.95rem; margin-top: 10px; line-height: 1.6;">
+                            <strong>Debut Day:</strong> 27 พฤศจิกายน 2568<br>
+                            วงบอยกรุ๊ปที่เกิดจากการรวมตัวของ 4 สมาชิกที่เปรียบเสมือนใบโคลเวอร์ 4 แฉก นำความโชคดีและความสุขมาให้ทุกคน
+                        </p>
+                    </div>
+
+                    <div class="member-card" style="background: rgba(183, 228, 199, 0.1); border: 2px dashed var(--green-clover); margin-top: 20px;">
+                        <h3 style="font-size: 1rem; color: var(--green-clover);">Official Contact & Social Media</h3>
+                        <div class="social-buttons">
+                            <a href="#" target="_blank" class="btn-social"><i class="fa-brands fa-x-twitter"></i> X (Twitter)</a>
+                            <a href="#" target="_blank" class="btn-social"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                            <a href="#" target="_blank" class="btn-social"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+                        </div>
+                        <div style="margin-top: 15px; font-size: 0.85rem; color: var(--text-gray);">
+                            <strong>Work Contact (GMMTV)</strong><br>
+                            Call: (+66)61-414-4046 | Line: @gmmtvartists_work
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 03 MEMBERS -->
+        <div class="dropdown-wrapper">
+            <button class="dropdown-btn">
+                <span>03 👤 MEMBERS</span>
+                <span class="dropdown-icon">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-inner">
+                    <div class="members-grid">
+                        
+                        <!-- Barcode -->
+                        <div class="member-card m-barcode">
+                            <img src="images/barcode.jpg" alt="Barcode" onerror="this.src='https://placehold.co/150x150/FFF/FFB7CE?text=Barcode'">
+                            <h3>Barcode</h3>
+                            <span class="m-role">แฉกที่ 1 : Hope</span>
+                            <p>ตฤณสิษฐ์ อิสระพงศ์พร<br>เกิด: 4 ส.ค. 2547</p>
+                            <div class="social-buttons">
+                                <a href="#" class="btn-social"><i class="fa-brands fa-instagram"></i> ig</a>
+                                <a href="#" class="btn-social"><i class="fa-brands fa-x-twitter"></i> x</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Keen -->
+                        <div class="member-card m-keen">
+                            <img src="images/keen.jpg" alt="Keen" onerror="this.src='https://placehold.co/150x150/FFF/AEE2FF?text=Keen'">
+                            <h3>Keen</h3>
+                            <span class="m-role">แฉกที่ 2 : Love</span>
+                            <p>สุวิจักขณ์ ปิยะนพโรจน์<br>เกิด: 18 ส.ค. 2548</p>
+                            <div class="social-buttons">
+                                <a href="#" class="btn-social"><i class="fa-brands fa-instagram"></i> ig</a>
+                                <a href="#" class="btn-social"><i class="fa-brands fa-x-twitter"></i> x</a>
+                            </div>
+                        </div>
+
+                        <!-- Ashi -->
+                        <div class="member-card m-ashi">
+                            <img src="images/ashi.jpg" alt="Ashi" onerror="this.src='https://placehold.co/150x150/FFF/CDB4DB?text=Ashi'">
+                            <h3>Ashi</h3>
+                            <span class="m-role">แฉกที่ 3 : Luck</span>
+                            <p>พีระกานต์ เตียวสุวรรณ<br>เกิด: 28 พ.ค. 2548</p>
+                            <div class="social-buttons">
+                                <a href="https://www.instagram.com/aliazhl_" class="btn-social"><i class="fa-brands fa-instagram"></i> ig</a>
+                                <a href="https://x.com/aliazhl" class="btn-social"><i class="fa-brands fa-x-twitter"></i> x</a>
+                            </div>
+                        </div>
+
+                        <!-- Aungpao -->
+                        <div class="member-card m-aungpao">
+                            <img src="images/aungpao.jpg" alt="Aungpao" onerror="this.src='https://placehold.co/150x150/FFF/B7E4C7?text=Aungpao'">
+                            <h3>Aungpao</h3>
+                            <span class="m-role">แฉกที่ 4 : Faith</span>
+                            <p>โอชิริส สุวรรณชีพ<br>เกิด: 20 มี.ค. 2549</p>
+                            <div class="social-buttons">
+                                <a href="https://www.instagram.com/20aungpao" class="btn-social"><i class="fa-brands fa-instagram"></i> ig</a>
+                                <a href="https://x.com/20aungpao" class="btn-social"><i class="fa-brands fa-x-twitter"></i> x</a>
+                                <a href="https://www.tiktok.com/@20aungpao" class="btn-social"><i class="fa-brands fa-tiktok"></i> tk</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 04 DISCOGRAPHY -->
+        <div class="dropdown-wrapper">
+            <button class="dropdown-btn">
+                <span>04 💿 DISCOGRAPHY</span>
+                <span class="dropdown-icon">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-inner">
+                    
+                    <h4 style="color: var(--green-clover); margin-top: 15px;">🎵 Digital Singles</h4>
+                    <div class="clover-songs-list">
+                        <!-- Single 1 -->
+                        <div class="clover-song-item">
+                            <div>
+                                <p class="clover-song-title">💚 คนคุ้นคอย (Next To You) [Debut Single]</p>
+                                <span class="clover-song-date">Released: 27 พ.ย. 2568</span>
+                            </div>
+                            <a href="https://youtu.be/lRG5Vk6e7-A" target="_blank" class="work-btn-link" style="color: var(--green-clover); border-color: var(--green-clover);">
+                                <i class="fa-solid fa-circle-play"></i> ฟังเพลง
+                            </a>
+                        </div>
+                        <!-- Single 2 -->
+                        <div class="clover-song-item">
+                            <div>
+                                <p class="clover-song-title">🖤 Bad Boy No 'DO' [2nd Single]</p>
+                                <span class="clover-song-date">Released: 6 ก.พ. 2569</span>
+                            </div>
+                            <a href="https://youtu.be/_X0o7GjjNVA" target="_blank" class="work-btn-link" style="color: var(--green-clover); border-color: var(--green-clover);">
+                                <i class="fa-solid fa-circle-play"></i> ฟังเพลง
+                            </a>
+                        </div>
+                        <!-- Single 3 -->
+                        <div class="clover-song-item">
+                            <div>
+                                <p class="clover-song-title">💖 Lonely Girl [3rd Single]</p>
+                                <span class="clover-song-date">Released: 29 พ.ค. 2569</span>
+                            </div>
+                            <a href="https://youtu.be/fXi0x4hiMfc" target="_blank" class="work-btn-link" style="color: var(--green-clover); border-color: var(--green-clover);">
+                                <i class="fa-solid fa-circle-play"></i> ฟังเพลง
+                            </a>
+                        </div>
+                        <!-- Single 4 -->
+                        <div class="clover-song-item">
+                            <div>
+                                <p class="clover-song-title">❤️ Think About You [4th Single]</p>
+                                <span class="clover-song-date">Released: 6 พ.ย. 2569</span>
+                            </div>
+                            <a href="https://youtu.be/nGtQfo9zbUo?si=wKwgrWD9TGNh9zoc" target="_blank" class="work-btn-link" style="color: var(--green-clover); border-color: var(--green-clover);">
+                                <i class="fa-solid fa-circle-play"></i> ฟังเพลง
+                            </a>
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--green-clover); margin-top: 30px;">🎶 C(L)O'VER PROJECT</h4>
+                    <div class="clover-songs-list">
+                        <div class="clover-song-item">
+                            <div>
+                                <p class="clover-song-title">Can I Call You Tonight? | C(L)O'VER PROJECT by ASHI - AUNGPAO</p>
+                                <span class="clover-song-date">Released: 18 ก.ย. 2569</span>
+                            </div>
+                            <a href="https://youtu.be/tqJVtXA6FWo?si=0f4m0MPt8xA1VcFw" target="_blank" class="work-btn-link" style="color: var(--purple-pastel); border-color: var(--purple-pastel);">
+                                <i class="fa-solid fa-circle-play"></i> ฟังเพลง
+                            </a>
+                        </div>
+                        <div class="clover-song-item">
+                            <div>
+                                <p class="clover-song-title">ความรักไม่ได้น่ากลัวขนาดนั้น (TRUST ME) | C(L)O'VER PROJECT by BARCODE - KEEN</p>
+                                <span class="clover-song-date">Released: 10 ก.ย. 2569</span>
+                            </div>
+                            <a href="https://youtu.be/aFFSv_jMsk0?si=ykUsWLmWYc-jYVLs" target="_blank" class="work-btn-link" style="color: var(--blue-pastel); border-color: var(--blue-pastel);">
+                                <i class="fa-solid fa-circle-play"></i> ฟังเพลง
+                            </a>
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--green-clover); margin-top: 30px;">🎤 CLO'VER Live Session</h4>
+                    <div class="clover-songs-list" style="margin-bottom: 20px;">
+                        <div class="clover-song-item">
+                            <div>
+                                <p class="clover-song-title">คนคุ้นคอย - Bad Boy No ‘DO’ - Lonely Girl | CLO'VER Live Session</p>
+                                <span class="clover-song-date">Released: 7 ต.ค. 2569</span>
+                            </div>
+                            <a href="https://youtu.be/pIsqjmKrPo0?si=r6A314iW1biPigHc" target="_blank" class="work-btn-link" style="color: var(--green-clover); border-color: var(--green-clover);">
+                                <i class="fa-solid fa-circle-play"></i> ดูคลิป
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 05 WORKS & ACTIVITIES -->
+        <div class="dropdown-wrapper">
+            <button class="dropdown-btn">
+                <span>05 🎬 WORKS & ACTIVITIES</span>
+                <span class="dropdown-icon">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-inner" style="padding-bottom: 20px;">
+                    
+                    <div class="series-list">
+                        <!-- Series 1: CLOSER to CLO'VER -->
+                        <div class="series-item">
+                            <button class="series-title-btn">
+                                <span>😎 CLOSER to CLO’VER (Variety Content)</span>
+                                <span class="series-arrow">▼</span>
+                            </button>
+                            <div class="series-detail">
+                                <div class="series-detail-inner" style="display: flex; flex-direction: column; gap: 12px;">
+                                    <!-- EP.0 - EP.8 List -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">EP.0 - Vlog แรกแบบชิลๆ ถ้าหิวก็กินข้าวนะคับ</span>
+                                        <a href="https://youtu.be/7iRezXkkqNk?si=rsdOkbivKdoJEaho" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">EP.1 - สงกรานต์นี้พวกพี่พามาซิ่งคับน้องๆ</span>
+                                        <a href="https://youtu.be/8JKxhPZ91eI?si=cNmeMT6XUBUSntHD" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">EP.2 - ไปขอนแก่น กลับมาเล่นน้ำฉบับคนแบดกันค้าบบบบ</span>
+                                        <a href="https://youtu.be/6OH0GVn8j5I?si=nDdKzCF3_D-nb4AK" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">EP.3 - มาไทเป แล้วเมื่อไรพี่จะเทใจให้ผม</span>
+                                        <a href="https://youtu.be/h0mW5EiJXPM?si=vn9qJt2yDWSIRUm_" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">EP.4 - พวกผมมาโตเกียว แต่รักเดียวนะค้าบบบ</span>
+                                        <a href="https://youtu.be/zPYWJm1HeRk?si=ltaPO2CTmjV3_YbK" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">EP.5 - พวกผมมาสิงค์โปร คิดถึงก็โทรมาหานะ </span>
+                                        <a href="https://youtu.be/k8Fc7n-8H3M?si=-7fqN5eBQaPj6Mll" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">EP.6 - เบื้องหลัง GOTCHAPOP4 นูน่าใจอ่อนยังค้าบบบ</span>
+                                        <a href="https://youtu.be/_i9rwziY12g?si=5fpjB954Adkcm0j4" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">EP.7 - CLO’VER บุกเกาหลี นูน่าพี่มาแล้ววววว</span>
+                                        <a href="https://youtu.be/HVfcfZV4Xxg?si=FFcnGZF3bj5OM8i8" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">EP.8 - เบื้องหลัง MONSTER MUSIC FESTIVAL 2026</span>
+                                        <a href="https://youtu.be/rWf-J_hI5Fo?si=NCCnyLF9KAx4nYpp" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Series 2: Dance -->
+                        <div class="series-item">
+                            <button class="series-title-btn">
+                                <span>🕺🏻 DANCE PRACTICE & PERFORMANCE</span>
+                                <span class="series-arrow">▼</span>
+                            </button>
+                            <div class="series-detail">
+                                <div class="series-detail-inner" style="display: flex; flex-direction: column; gap: 12px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">คนคุ้นคอย (Next To You) [ DANCE PRACTICE ]</span>
+                                        <a href="https://youtu.be/ez1BjyQ2e0g?si=_RwCJZFWAhJVhT-C" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">คนคุ้นคอย (Next To You) [ DANCE PERFORMANCE ]</span>
+                                        <a href="https://youtu.be/lw6Z9bl5dlY?si=_F0eDjyaMeXKCFVy" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Bad Boy No 'DO' [ DANCE PRACTICE ]</span>
+                                        <a href="https://youtu.be/IPPvzNv5Vpw?si=7zrElJNIgjraUPHH" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Bad Boy No 'DO' [ DANCE PERFORMANCE ]</span>
+                                        <a href="https://youtu.be/OqGWbzxQ6Hw?si=h7dAyeymR5RWSx_B" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Lonely Girl [ DANCE PRACTICE ]</span>
+                                        <a href="https://youtu.be/CmNR7YwOepA?si=MTwjc9huwvH-wW9p" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Series 3: Behind -->
+                        <div class="series-item">
+                            <button class="series-title-btn">
+                                <span>🎞️ BEHIND THE SONG & THE SCENES</span>
+                                <span class="series-arrow">▼</span>
+                            </button>
+                            <div class="series-detail">
+                                <div class="series-detail-inner" style="display: flex; flex-direction: column; gap: 12px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">คนคุ้นคอย (Next To You) [ BEHIND THE SONG ]</span>
+                                        <a href="https://youtu.be/IRg-b_QpFo8?si=4vZrx7wp7Dzx8R63" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">คนคุ้นคอย (Next To You) [ BEHIND THE SCENES ]</span>
+                                        <a href="https://youtu.be/QT5NxlO_agU?si=0nlUG0Wil82V2ZYD" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Bad Boy No 'DO' [ BEHIND THE SONG ]</span>
+                                        <a href="https://youtu.be/km-ukCCN-z8?si=qXNTtQxEoJi7Q2cP" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Bad Boy No 'DO' [ BEHIND THE SCENES ]</span>
+                                        <a href="https://youtu.be/EHMVIi5xym4?si=C1D3lO6X-g_WaLJU" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Lonely Girl [ BEHIND THE SONG ]</span>
+                                        <a href="https://youtu.be/E1dAbejmj10?si=RAy2tzyhnvB1Vyul" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Lonely Girl [ BEHIND THE SCENES ]</span>
+                                        <a href="https://youtu.be/hanmrmTYXxg?si=-0qoy1xT5ebP2DQD" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Series 4: Reaction -->
+                        <div class="series-item">
+                            <button class="series-title-btn">
+                                <span>🎶 MV REACTION</span>
+                                <span class="series-arrow">▼</span>
+                            </button>
+                            <div class="series-detail">
+                                <div class="series-detail-inner" style="display: flex; flex-direction: column; gap: 12px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">คนคุ้นคอย (Next To You) [ MV REACTION ]</span>
+                                        <a href="https://youtu.be/NmteR0Zksxg?si=7li9y4KUKYoL1khH" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Bad Boy No 'DO' [ MV REACTION ]</span>
+                                        <a href="https://youtu.be/dqahXbB93Ms?si=9I8nJtZIhKExarRA" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Lonely Girl [ MV REACTION ]</span>
+                                        <a href="https://youtu.be/xZjp-TzRTo0?si=UH9YdapxM95JC7rv" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <span class="clover-song-title">Think About You [ MV REACTION ]</span>
+                                        <a href="https://youtu.be/oxpCafm_VNg?si=OQX-XvdA2ItZ6dMC" target="_blank" class="work-btn-link"><i class="fa-solid fa-circle-play"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 06 TIMELINE -->
+        <div class="dropdown-wrapper">
+            <button class="dropdown-btn">
+                <span>06 ⏳ TIMELINE (Events & Schedule)</span>
+                <span class="dropdown-icon">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-inner">
+                    <p style="margin-top: 15px; color: var(--text-gray); font-size: 0.9rem;">บันทึกเส้นทางคอนเสิร์ตและงานเทศกาลดนตรีของ CLO'VER</p>
+                    
+                    <div class="event-timeline" style="margin-bottom: 20px;">
+                        <!-- Event 1 -->
+                        <div class="event-item" style="border-left-color: var(--purple-pastel);">
+                            <div class="event-header" style="color: var(--purple-pastel);">
+                                <span><i class="fa-solid fa-microphone-lines"></i> 13 - 15 ก.พ. 2569</span>
+                                <span>#Concert</span>
+                            </div>
+                            <h5 class="event-title">RISER CONCERT : THE FIRST RISE</h5>
+                            <p class="event-desc">สถานที่: IMPACT Arena </p>
+                        </div>
+                        <!-- Event 2 -->
+                        <div class="event-item" style="border-left-color: var(--blue-pastel);">
+                            <div class="event-header" style="color: var(--blue-pastel);">
+                                <span><i class="fa-regular fa-calendar-days"></i> 6 มิ.ย. 2569</span>
+                                <span>#Festival</span>
+                            </div>
+                            <h5 class="event-title">🍀 GOTCHA POP 4 CONCERT</h5>
+                            <p class="event-desc">สถานที่: Queen Sirikit National Convention Center</p>
+                        </div>
+                        <!-- Event 3 -->
+                        <div class="event-item" style="border-left-color: var(--pink-pastel);">
+                            <div class="event-header" style="color: var(--pink-pastel);">
+                                <span><i class="fa-regular fa-clock"></i> 30 ก.ย. 2569 | 19:00 น.</span>
+                                <span>#Upcoming</span>
+                            </div>
+                            <h5 class="event-title">📍 Nineentertain 24th Anniversary Charity Concert</h5>
+                            <p class="event-desc">สถานที่: PARC PARAGON</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 07 GALLERY -->
+        <div class="dropdown-wrapper">
+            <button class="dropdown-btn">
+                <span>07 📸 GALLERY</span>
+                <span class="dropdown-icon">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-inner">
+                    <p style="margin-top: 15px; color: var(--text-gray); font-size: 0.9rem;">คลังภาพความทรงจำและวิดีโอ (พื้นที่สำหรับเพิ่มรูปภาพแฟนคลับ)</p>
+                    <div class="gallery-grid" style="margin-bottom: 20px;">
+                        <!-- รูป Placeholder (สามารถเปลี่ยน src เป็นรูปจริงได้เลย) -->
+                        <img src="https://placehold.co/200x200/FDFBF7/B7E4C7?text=Photo+1" alt="Gallery 1" class="gallery-item">
+                        <img src="https://placehold.co/200x200/FDFBF7/FFB7CE?text=Photo+2" alt="Gallery 2" class="gallery-item">
+                        <img src="https://placehold.co/200x200/FDFBF7/AEE2FF?text=Photo+3" alt="Gallery 3" class="gallery-item">
+                        <img src="https://placehold.co/200x200/FDFBF7/CDB4DB?text=Photo+4" alt="Gallery 4" class="gallery-item">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 08 SPECIAL (Anniversary & Memories) -->
+        <div class="dropdown-wrapper">
+            <button class="dropdown-btn" style="color: #E88BA0;">
+                <span>08 💌 SPECIAL: Anniversary & Memories</span>
+                <span class="dropdown-icon" style="color: #E88BA0;">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-inner">
+                    <div class="special-card" style="margin-bottom: 20px;">
+                        <h3 style="color: #D67A8F; margin-bottom: 10px;">Happy 1st Anniversary CLO'VER 🍀</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-main); line-height: 1.6;">
+                            ขอบคุณที่เดินทางมาด้วยกันตลอด 1 ปีเต็ม พวกคุณคือใบโคลเวอร์ที่นำพาความโชคดีและความรักมาให้แฟนคลับเสมอ<br>
+                            โปรเจกต์ Digital Archive นี้จัดทำขึ้นเพื่อรวบรวมความทรงจำตั้งแต่วันแรกที่เดบิวต์ <br>
+                            ขอให้ CLO'VER เติบโตอย่างสวยงามต่อไปนะ ✨
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 📌 Footer -->
+    <footer class="site-footer">
+        © 2026 CLO'VER MEMO. 🍀✨ Made with 😼 by Boboo🌻(jaomaew_boo)
+    </footer>
+
+    <!-- 🛠️ JavaScript -->
+    <script>
+        // ควบคุม Dropdown หมวดหมู่หลัก
+        const mainDropdowns = document.querySelectorAll('.dropdown-wrapper');
+        mainDropdowns.forEach(dropdown => {
+            const btn = dropdown.querySelector('.dropdown-btn');
+            btn.addEventListener('click', () => {
+                const isActive = dropdown.classList.contains('active');
+                mainDropdowns.forEach(other => other.classList.remove('active'));
+                if (!isActive) dropdown.classList.add('active');
+            });
+        });
+
+        // ควบคุมเมนูย่อยของลิสต์ซีรีส์
+        const seriesItems = document.querySelectorAll('.series-item');
+        seriesItems.forEach(item => {
+            const titleBtn = item.querySelector('.series-title-btn');
+            titleBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                const isOpen = item.classList.contains('active');
+                seriesItems.forEach(other => other.classList.remove('active'));
+                if (!isOpen) item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
