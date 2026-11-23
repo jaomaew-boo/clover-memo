@@ -601,6 +601,184 @@
                 padding: 4px 10px;
             }
         }
+
+        /* --- 🎵 การ์ดเพลงสี่เหลี่ยม (Digital Singles Grid) --- */
+        .singles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .single-card {
+            background: #FFFFFF;
+            border: 2px solid #EFE9DF;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .single-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--green-pastel);
+        }
+
+        .single-cover {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1; /* สี่เหลี่ยมจัตุรัส */
+            overflow: hidden;
+            background: #F4EFE6;
+        }
+
+        .single-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+        .single-card:hover .single-cover img {
+            transform: scale(1.06);
+        }
+
+        /* ปุ่ม Play ตรงกลางปก */
+        .cover-play-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.22);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.25s ease;
+        }
+
+        .single-card:hover .cover-play-overlay {
+            background: rgba(0, 0, 0, 0.38);
+        }
+
+        .cover-play-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--green-clover);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.15rem;
+            padding-left: 3px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .single-card:hover .cover-play-circle {
+            transform: scale(1.12);
+            background: var(--green-clover);
+            color: #FFFFFF;
+        }
+
+        .single-info {
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .single-info .song-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .single-info .song-date {
+            font-size: 0.72rem;
+            color: var(--text-gray);
+            margin-top: 3px;
+        }
+
+        /* --- 🎬 หน้าต่างเล่นเพลง (Pop-up Player) --- */
+        .player-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .player-modal.open {
+            display: flex;
+        }
+
+        .player-box {
+            background: var(--paper-bg);
+            border: 3px solid var(--green-pastel);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 560px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            animation: pageFlip 0.25s ease;
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            background: rgba(183, 228, 199, 0.35);
+            font-family: 'Itim', cursive;
+            font-size: 1.05rem;
+            color: var(--text-main);
+        }
+
+        .player-close {
+            background: #FFFFFF;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .player-close:hover {
+            background: var(--coral-pastel);
+            color: #FFFFFF;
+        }
+
+        .player-frame-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        .player-frame-wrap iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 520px) {
+            .singles-grid { gap: 10px; }
+            .single-info { padding: 8px 10px; }
+            .single-info .song-title { font-size: 0.8rem; }
+            .cover-play-circle { width: 40px; height: 40px; font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
@@ -735,22 +913,61 @@
                     <!-- 🎵 Digital Singles -->
                     <div class="sub-panel active" id="sub-singles">
                         <h4 class="section-sub">🎵 Digital Singles</h4>
-                        <div class="song-list">
-                            <div class="song-item">
-                                <div><p class="song-title">💚 คนคุ้นคอย (Next To You) [Debut Single]</p><span class="song-date">Released: 27 พ.ย. 2025</span></div>
-                                <a href="https://youtu.be/lRG5Vk6e7-A" target="_blank" class="play-btn"><i class="fa-solid fa-play"></i> ฟังเพลง</a>
+                        <div class="singles-grid">
+                            <!-- Single 1 -->
+                            <div class="single-card" onclick="openPlayer('lRG5Vk6e7-A', '💚 คนคุ้นคอย (Next To You)')">
+                                <div class="single-cover">
+                                    <img src="images/single1.jpg" alt="คนคุ้นคอย (Next To You)" onerror="this.src='https://img.youtube.com/vi/lRG5Vk6e7-A/hqdefault.jpg'">
+                                    <div class="cover-play-overlay">
+                                        <div class="cover-play-circle"><i class="fa-solid fa-play"></i></div>
+                                    </div>
+                                </div>
+                                <div class="single-info">
+                                    <p class="song-title">💚 คนคุ้นคอย (Next To You)</p>
+                                    <span class="song-date">Debut Single • 27 พ.ย. 2025</span>
+                                </div>
                             </div>
-                            <div class="song-item">
-                                <div><p class="song-title">🖤 Bad Boy No 'DO' [2nd Single]</p><span class="song-date">Released: 6 ก.พ. 2026</span></div>
-                                <a href="https://youtu.be/_X0o7GjjNVA" target="_blank" class="play-btn"><i class="fa-solid fa-play"></i> ฟังเพลง</a>
+
+                            <!-- Single 2 -->
+                            <div class="single-card" onclick="openPlayer('_X0o7GjjNVA', '🖤 Bad Boy No \'DO\'')">
+                                <div class="single-cover">
+                                    <img src="images/single2.jpg" alt="Bad Boy No 'DO'" onerror="this.src='https://img.youtube.com/vi/_X0o7GjjNVA/hqdefault.jpg'">
+                                    <div class="cover-play-overlay">
+                                        <div class="cover-play-circle"><i class="fa-solid fa-play"></i></div>
+                                    </div>
+                                </div>
+                                รา<div class="single-info">
+                                    <p class="song-title">🖤 Bad Boy No 'DO'</p>
+                                    <span class="song-date">2nd Single • 6 ก.พ. 2026</span>
+                                </div>
                             </div>
-                            <div class="song-item">
-                                <div><p class="song-title">💖 Lonely Girl [3rd Single]</p><span class="song-date">Released: 29 พ.ค. 2026</span></div>
-                                <a href="https://youtu.be/fXi0x4hiMfc" target="_blank" class="play-btn"><i class="fa-solid fa-play"></i> ฟังเพลง</a>
+
+                            <!-- Single 3 -->
+                            <div class="single-card" onclick="openPlayer('fXi0x4hiMfc', '💖 Lonely Girl')">
+                                <div class="single-cover">
+                                    <img src="images/single3.jpg" alt="Lonely Girl" onerror="this.src='https://img.youtube.com/vi/fXi0x4hiMfc/hqdefault.jpg'">
+                                    <div class="cover-play-overlay">
+                                        <div class="cover-play-circle"><i class="fa-solid fa-play"></i></div>
+                                    </div>
+                                </div>
+                                <div class="single-info">
+                                    <p class="song-title">💖 Lonely Girl</p>
+                                    <span class="song-date">3rd Single • 29 พ.ค. 2026</span>
+                                </div>
                             </div>
-                            <div class="song-item">
-                                <div><p class="song-title">❤️ Think About You [4th Single]</p><span class="song-date">Released: 6 พ.ย. 2026</span></div>
-                                <a href="https://youtu.be/nGtQfo9zbUo?si=wKwgrWD9TGNh9zoc" target="_blank" class="play-btn"><i class="fa-solid fa-play"></i> ฟังเพลง</a>
+
+                            <!-- Single 4 -->
+                            <div class="single-card" onclick="openPlayer('nGtQfo9zbUo', '❤️ Think About You')">
+                                <div class="single-cover">
+                                    <img src="images/single4.jpg" alt="Think About You" onerror="this.src='https://img.youtube.com/vi/nGtQfo9zbUo/hqdefault.jpg'">
+                                    <div class="cover-play-overlay">
+                                        <div class="cover-play-circle"><i class="fa-solid fa-play"></i></div>
+                                    </div>
+                                </div>
+                                <div class="single-info">
+                                    <p class="song-title">❤️ Think About You</p>
+                                    <span class="song-date">4th Single • 6 พ.ย. 2026</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1027,6 +1244,19 @@
         </nav>
     </div>
 
+    <!-- 🎵 Pop-up เครื่องเล่นเพลง -->
+    <div class="player-modal" id="playerModal" onclick="closePlayer(event)">
+        <div class="player-box" onclick="event.stopPropagation()">
+            <div class="player-header">
+                <span id="playerTitle">Now Playing</span>
+                <button class="player-close" onclick="closePlayer()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="player-frame-wrap">
+                <iframe id="playerIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <script>
         const pages = document.querySelectorAll('.page');
         const tabs = document.querySelectorAll('.postit-tab');
@@ -1104,6 +1334,21 @@
         });
 
         goToPage(0);
+        // ควบคุม Pop-up เครื่องเล่นเพลง
+        const playerModal = document.getElementById('playerModal');
+        const playerIframe = document.getElementById('playerIframe');
+        const playerTitle = document.getElementById('playerTitle');
+
+        function openPlayer(videoId, title) {
+            playerTitle.textContent = title;
+            playerIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            playerModal.classList.add('open');
+        }
+
+        function closePlayer() {
+            playerModal.classList.remove('open');
+            playerIframe.src = ''; // หยุดเล่นเพลงทันทีเมื่อปิดหน้าต่าง
+        }
     </script>
 </body>
 </html>
