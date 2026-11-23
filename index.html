@@ -834,6 +834,249 @@
             .single-info .song-title { font-size: 0.8rem; }
             .cover-play-circle { width: 40px; height: 40px; font-size: 1rem; }
         }
+        
+        /* --- 📁 คลังภาพแบบโฟลเดอร์ (Gallery Folders) --- */
+        .folder-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 12px;
+        }
+
+        .folder-card {
+            position: relative;
+            cursor: pointer;
+            padding-top: 16px; /* เว้นที่ให้หูโฟลเดอร์ด้านบน */
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .folder-card:hover {
+            transform: translateY(-6px);
+        }
+
+        /* หูแฟ้มโฟลเดอร์ด้านบนซ้าย */
+        .folder-tab {
+            position: absolute;
+            top: 0;
+            left: 12px;
+            width: 44%;
+            height: 22px;
+            border-radius: 10px 12px 0 0;
+            background: var(--green-pastel);
+            z-index: 1;
+        }
+
+        /* ตัวแฟ้มโฟลเดอร์ */
+        .folder-body {
+            position: relative;
+            z-index: 2;
+            background: #FFFFFF;
+            border: 2.5px solid var(--green-pastel);
+            border-radius: 14px;
+            padding: 10px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+        }
+
+        /* สีแยกแต่ละโฟลเดอร์ */
+        .f-pink .folder-tab   { background: var(--pink-pastel); }
+        .f-pink .folder-body  { border-color: var(--pink-pastel); }
+        .f-blue .folder-tab   { background: var(--blue-pastel); }
+        .f-blue .folder-body  { border-color: var(--blue-pastel); }
+        .f-purple .folder-tab { background: var(--purple-pastel); }
+        .f-purple .folder-body{ border-color: var(--purple-pastel); }
+
+        .folder-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            border-radius: 9px;
+            overflow: hidden;
+            background: #F4EFE6;
+            margin-bottom: 8px;
+        }
+
+        .folder-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+        .folder-card:hover .folder-thumb img {
+            transform: scale(1.06);
+        }
+
+        .folder-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .folder-name {
+            font-family: 'Itim', cursive;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .folder-count {
+            font-size: 0.72rem;
+            background: #F4EFE6;
+            color: var(--text-gray);
+            padding: 2px 8px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        /* --- 🖼️ หน้าต่างสไลด์รูปภาพ (Gallery Slider Modal) --- */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .gallery-modal.open {
+            display: flex;
+        }
+
+        .gallery-box {
+            background: var(--paper-bg);
+            border: 3px solid var(--green-pastel);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 680px;
+            overflow: hidden;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+            animation: pageFlip 0.25s ease;
+        }
+
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            background: rgba(183, 228, 199, 0.35);
+            font-family: 'Itim', cursive;
+            font-size: 1.1rem;
+        }
+
+        .gallery-header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slide-counter {
+            font-size: 0.88rem;
+            color: var(--text-gray);
+            background: #FFFFFF;
+            padding: 2px 10px;
+            border-radius: 14px;
+        }
+
+        .slider-stage {
+            position: relative;
+            background: #1E1E1E;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 390px;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .slider-stage img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+            transition: opacity 0.2s ease;
+        }
+
+        .slide-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.88);
+            color: var(--text-main);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .slide-nav-btn:hover {
+            background: var(--green-clover);
+            color: #FFFFFF;
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .slide-prev { left: 12px; }
+        .slide-next { right: 12px; }
+    
+        .slide-caption {
+            text-align: center;
+            padding: 10px 16px 6px 16px;
+            font-family: 'Itim', cursive;
+            font-size: 0.98rem;
+            color: var(--text-main);
+            min-height: 36px;
+        }
+
+        /* แถบรูปย่อด้านล่าง */
+        .thumb-strip {
+            display: flex;
+            gap: 8px;
+            padding: 6px 14px 14px 14px;
+            overflow-x: auto;
+            justify-content: center;
+        }
+
+        .thumb-strip::-webkit-scrollbar { height: 5px; }
+        .thumb-strip::-webkit-scrollbar-thumb { background: var(--green-pastel); border-radius: 10px; }
+
+        .thumb-item {
+            width: 58px;
+            height: 42px;
+            border-radius: 6px;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.5;
+            border: 2.5px solid transparent;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .thumb-item.active, .thumb-item:hover {
+            opacity: 1;
+            border-color: var(--green-clover);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .folder-grid { gap: 12px; }
+            .folder-body { padding: 8px; }
+            .folder-name { font-size: 0.92rem; }
+            .slider-stage { height: 270px; }
+            .slide-nav-btn { width: 34px; height: 34px; font-size: 0.85rem; }
+            .thumb-strip { justify-content: flex-start; }
+        }
     </style>
 </head>
 <body>
@@ -1257,12 +1500,64 @@
                 <!-- หน้าที่ 7: GALLERY -->
                 <section class="page" data-page="6">
                     <h2 class="page-title">📸 GALLERY</h2>
-                    <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1.2rem;">คลังภาพความทรงจำ</p>
-                    <div class="gallery-grid">
-                        <div class="gallery-card"><img src="https://placehold.co/400x300/FDFBF7/B7E4C7?text=Memory+1" alt="Gallery 1"></div>
-                        <div class="gallery-card"><img src="https://placehold.co/400x300/FDFBF7/FFB7CE?text=Memory+2" alt="Gallery 2"></div>
-                        <div class="gallery-card"><img src="https://placehold.co/400x300/FDFBF7/AEE2FF?text=Memory+3" alt="Gallery 3"></div>
-                        <div class="gallery-card"><img src="https://placehold.co/400x300/FDFBF7/CDB4DB?text=Memory+4" alt="Gallery 4"></div>
+                    <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1rem;">เลือกเปิดโฟลเดอร์เพื่อดูภาพความทรงจำ 🍀</p>
+    
+                    <div class="folder-grid">
+                        <!-- โฟลเดอร์ 1 -->
+                        <div class="folder-card" onclick="openFolder('debut')">
+                            <div class="folder-tab"></div>
+                            <div class="folder-body">
+                                <div class="folder-thumb">
+                                    <img src="images/gallery/debut1.jpg" alt="Debut" onerror="this.src='https://placehold.co/400x250/FDFBF7/B7E4C7?text=Debut+Photos'">
+                                </div>
+                                <div class="folder-meta">
+                                    <span class="folder-name">🍀 Debut & Concepts</span>
+                                    <span class="folder-count">3 รูป</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- โฟลเดอร์ 2 -->
+                        <div class="folder-card f-pink" onclick="openFolder('stage')">
+                           <div class="folder-tab"></div>
+                            <div class="folder-body">
+                                <div class="folder-thumb">
+                    <img src="images/gallery/stage1.jpg" alt="Stage" onerror="this.src='https://placehold.co/400x250/FDFBF7/FFB7CE?text=Stage+Moments'">
+                                </div>
+                                <div class="folder-meta">
+                                    <span class="folder-name">🎤 Stage & Concerts</span>
+                                    <span class="folder-count">3 รูป</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- โฟลเดอร์ 3 -->
+                        <div class="folder-card f-blue" onclick="openFolder('behind')">
+                            <div class="folder-tab"></div>
+                            <div class="folder-body">
+                                <div class="folder-thumb">
+                                    <img src="images/gallery/behind1.jpg" alt="Behind" onerror="this.src='https://placehold.co/400x250/FDFBF7/AEE2FF?text=Behind+Scenes'">
+                                </div>
+                                <div class="folder-meta">
+                                    <span class="folder-name">🎞️ Behind The Scenes</span>
+                                    <span class="folder-count">2 รูป</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- โฟลเดอร์ 4 -->
+                        <div class="folder-card f-purple" onclick="openFolder('special')">
+                            <div class="folder-tab"></div>
+                            <div class="folder-body">
+                                <div class="folder-thumb">
+                                    <img src="images/gallery/special1.jpg" alt="Special" onerror="this.src='https://placehold.co/400x250/FDFBF7/CDB4DB?text=Special+Memories'">
+                                </div>
+                                <div class="folder-meta">
+                                    <span class="folder-name">✨ Special Moments</span>
+                                    <span class="folder-count">2 รูป</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -1274,7 +1569,7 @@
                         <p style="font-size: 0.98rem; color: var(--text-main);">
                             ขอบคุณที่เดินทางมาด้วยกันตลอด 1 ปีที่ผ่านมา<br>
                             น้องใบคือใบโคลเวอร์ที่นำพาความโชคดี ความรักและความสุขมาให้เจ่เจ้เสมอ<br>
-                            โปรเจกต์ Digital Archive เล่มนี้จัดทำขึ้นเพื่อรวบรวมความทรงจำและการเติบโตของเด็กๆ<br>
+                            โปรเจกต์ MEMO เล่มนี้จัดทำขึ้นเพื่อรวบรวมความทรงจำและการเติบโตของเด็กๆ<br>
                             ขอให้ CLO'VER เติบโตอย่างสวยงามและมีความสุขในทุกๆ ก้าวต่อไปนะ ✨
                         </p>
                     </div>
@@ -1317,6 +1612,26 @@
             <div class="player-frame-wrap">
                 <iframe id="playerIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
+        </div>
+    </div>
+
+    <!-- 📸 Pop-up สไลด์รูปภาพในโฟลเดอร์ -->
+    <div class="gallery-modal" id="galleryModal" onclick="closeGallery()">
+        <div class="gallery-box" onclick="event.stopPropagation()">
+            <div class="gallery-header">
+                <span id="galleryFolderTitle">📁 Folder</span>
+                <div class="gallery-header-right">
+                    <span class="slide-counter" id="slideCounter">1 / 1</span>
+                    <button class="player-close" onclick="closeGallery()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            <div class="slider-stage" id="sliderStage">
+                <button class="slide-nav-btn slide-prev" onclick="changeSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                <img id="sliderImg" src="" alt="Gallery Photo">
+                <button class="slide-nav-btn slide-next" onclick="changeSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="slide-caption" id="slideCaption"></div>
+            <div class="thumb-strip" id="thumbStrip"></div>
         </div>
     </div>
 
@@ -1412,6 +1727,118 @@
             playerModal.classList.remove('open');
             playerIframe.src = ''; // หยุดเล่นเพลงทันทีเมื่อปิดหน้าต่าง
         }
+
+        // --- 📁 ข้อมูลรูปภาพในแต่ละโฟลเดอร์ ---
+        const galleryFolders = {
+            debut: {
+                title: '🍀 Debut & Concepts',
+                photos: [
+                    { src: 'images/gallery/debut1.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/B7E4C7?text=Debut+1', caption: 'Debut Day — 27 Nov 2025 🍀' },
+                    { src: 'images/gallery/debut2.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/AEE2FF?text=Debut+2', caption: 'คนคุ้นคอย (Next To You) Concept Photo' },
+                    { src: 'images/gallery/debut3.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/FFB7CE?text=Debut+3', caption: '4-Leaf Clover Together ✨' }
+                ]
+            },
+            stage: {
+                title: '🎤 Stage & Concerts',
+                photos: [
+                    { src: 'images/gallery/stage1.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/FFB7CE?text=Stage+1', caption: 'RISER CONCERT : THE FIRST RISE' },
+                    { src: 'images/gallery/stage2.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/FFD6A5?text=Stage+2', caption: 'GOTCHA POP 4 CONCERT' },
+                    { src: 'images/gallery/stage3.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/CDB4DB?text=Stage+3', caption: 'TPOP STAGE IN PARIS 🇫🇷' }
+                ]
+            },
+            behind: {
+                title: '🎞️ Behind The Scenes',
+                photos: [
+                    { src: 'images/gallery/behind1.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/AEE2FF?text=Behind+1', caption: 'เบื้องหลังการถ่ายทำ MV 🎬' },
+                    { src: 'images/gallery/behind2.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/B7E4C7?text=Behind+2', caption: 'ซ้อมเต้นก่อนขึ้นเวที 🕺🏻' }
+                ]
+            },
+            special: {
+                title: '✨ Special Moments',
+                photos: [
+                    { src: 'images/gallery/special1.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/CDB4DB?text=Special+1', caption: 'โมเมนต์น่ารักๆ ของทั้ง 4 คน 💚' },
+                    { src: 'images/gallery/special2.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/FFADAD?text=Special+2', caption: 'Happy 1st Anniversary CLO\'VER 🎉' }
+                ]
+            }
+        };
+
+        const galleryModal = document.getElementById('galleryModal');
+        const galleryFolderTitle = document.getElementById('galleryFolderTitle');
+        const slideCounter = document.getElementById('slideCounter');
+        const sliderImg = document.getElementById('sliderImg');
+        const slideCaption = document.getElementById('slideCaption');
+        const thumbStrip = document.getElementById('thumbStrip');
+        const sliderStage = document.getElementById('sliderStage');
+
+        let currentPhotos = [];
+        let currentSlide = 0;
+
+        function openFolder(folderKey) {
+            const folder = galleryFolders[folderKey];
+            if (!folder || !folder.photos.length) return;
+
+            currentPhotos = folder.photos;
+            currentSlide = 0;
+            galleryFolderTitle.textContent = folder.title;
+
+            // สร้างแถบรูปย่อด้านล่าง
+            thumbStrip.innerHTML = '';
+            currentPhotos.forEach((photo, idx) => {
+                const thumb = document.createElement('img');
+                thumb.src = photo.src;
+                thumb.className = 'thumb-item';
+                thumb.onerror = () => { thumb.src = photo.fallback; };
+                thumb.onclick = () => showSlide(idx);
+                thumbStrip.appendChild(thumb);
+            });
+
+            showSlide(0);
+            galleryModal.classList.add('open');
+        }
+
+        function showSlide(index) {
+            if (!currentPhotos.length) return;
+            currentSlide = (index + currentPhotos.length) % currentPhotos.length;
+            const photo = currentPhotos[currentSlide];
+
+            sliderImg.onerror = () => { sliderImg.src = photo.fallback; };
+            sliderImg.src = photo.src;
+            slideCaption.textContent = photo.caption || '';
+            slideCounter.textContent = `${currentSlide + 1} / ${currentPhotos.length}`;
+
+            thumbStrip.querySelectorAll('.thumb-item').forEach((t, i) => {
+                t.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        function changeSlide(step) {
+            showSlide(currentSlide + step);
+        }
+
+        function closeGallery() {
+            galleryModal.classList.remove('open');
+        }
+
+        // รองรับการปัดซ้าย-ขวาบนมือถือในหน้าสไลด์รูป
+        let gTouchStartX = 0;
+        sliderStage.addEventListener('touchstart', (e) => {
+            gTouchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        sliderStage.addEventListener('touchend', (e) => {
+            const diff = gTouchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 45) {
+                changeSlide(diff > 0 ? 1 : -1);
+            }
+        }, { passive: true });
+
+        // กดลูกศรซ้าย-ขวา / Esc บนคีย์บอร์ดเมื่อเปิดดูรูป (ไม่ให้ไปพลิกหน้าสมุดข้างหลัง)
+        window.addEventListener('keydown', (e) => {
+            if (!galleryModal.classList.contains('open')) return;
+            if (e.key === 'ArrowRight') { e.stopImmediatePropagation(); changeSlide(1); }
+            else if (e.key === 'ArrowLeft') { e.stopImmediatePropagation(); changeSlide(-1); }
+            else if (e.key === 'Escape') { e.stopImmediatePropagation(); closeGallery(); }
+        }, true);
     </script>
 </body>
 </html>
