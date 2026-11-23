@@ -314,35 +314,90 @@
         .members-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.2rem;
+            gap: 1rem;
         }
+
         .member-card {
             background: #FFFFFF;
             border-radius: 18px;
-            padding: 1.2rem;
-            text-align: center;
+            padding: 0.9rem;
             border: 2px solid #F0EAE1;
             box-shadow: 0 4px 10px rgba(0,0,0,0.03);
             transition: transform 0.3s ease;
+            /* จัดวางแนวนอน: รูปซ้าย ข้อมูลขวา */
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
         }
+
         .member-card:hover { transform: translateY(-5px); }
-        .member-card img { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid; padding: 2px; margin-bottom: 8px; }
-        .m-barcode img { border-color: var(--pink-pastel); }
+
+        .member-card img {
+            width: 115px;
+            height: 150px;
+            border-radius: 14px; /* ขอบมนสไตล์โฟโต้การ์ด */
+            object-fit: cover;
+            border: 3px solid;
+            padding: 2px;
+            flex-shrink: 0; /* ไม่ให้รูปโดนบีบ */
+            margin-bottom: 0;
+        }
+
+        .m-barcode img { border-color: var(--green-pastel); }
         .m-keen img { border-color: var(--blue-pastel); }
         .m-ashi img { border-color: var(--purple-pastel); }
-        .m-aungpao img { border-color: var(--green-pastel); }
+        .m-aungpao img { border-color: var(--pink-pastel); }
+
+        .member-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .member-info h3 {
+            font-size: 1.35rem;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
         .m-role {
             font-family: 'Itim', cursive;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             background: var(--green-clover);
             color: #fff;
-            padding: 3px 12px;
+            padding: 2px 10px;
             border-radius: 15px;
             display: inline-block;
             margin-bottom: 6px;
         }
-        .member-card p { font-size: 0.82rem; color: var(--text-gray); line-height: 1.4; }
 
+        .member-card p {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            line-height: 1.45;
+        }
+
+        /* จัดปุ่มโซเชียลในการ์ดให้ชิดซ้ายตามข้อความ */
+        .member-card .social-buttons {
+            justify-content: flex-start;
+            margin-top: 8px;
+            gap: 6px;
+        }
+
+        .member-card .btn-social {
+            padding: 4px 10px;
+            font-size: 0.78rem;
+        }    
+
+        /* ปรับขนาดรูปเล็กน้อยบนจอมือถือ */
+        @media (max-width: 820px) {
+            .members-grid { grid-template-columns: 1fr; }
+            .member-card img {
+                width: 105px;
+                height: 138px;
+            }
+        }
+        
         /* ปุ่ม Social */
         .social-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; }
         .btn-social {
@@ -852,53 +907,61 @@
                     <h2 class="page-title">👤 MEMBERS</h2>
                     <div class="members-grid">
                         <div class="member-card m-barcode">
-                            <img src="images/ofc/IMG_6779.JPG" alt="Barcode" onerror="this.src='https://placehold.co/150x150/FFF/FFB7CE?text=Barcode'">
-                            <h3>Barcode</h3>
-                            <span class="m-role">แฉกที่ 1 : Hope</span>
-                            <p>บาร์โค้ด ตฤณสิษฐ์ อิสระพงศ์พร<br>เกิด: 4 ส.ค. 2004</p>
-                            <div class="social-buttons">
-                                <a href="https://www.instagram.com/Barcode.Tin" target="_blank" class="btn-social"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="https://x.com/BarcodeTin" target="_blank" class="btn-social"><i class="fa-brands fa-x-twitter"></i></a>
-                                <a href="https://www.tiktok.com/@barcode.tin" target="_blank" class="btn-social"><i class="fa-brands fa-tiktok"></i></a>
+                            <img src="images/ofc/IMG_6779.JPG" alt="Barcode" onerror="this.src='https://placehold.co/150x200/FFF/FFB7CE?text=Barcode'">
+                            <div class="member-info">
+                                <h3>Barcode</h3>
+                                <span class="m-role">แฉกที่ 1 : Hope</span>
+                                <p>บาร์โค้ด ตฤณสิษฐ์ อิสระพงศ์พร<br>เกิด: 4 ส.ค. 2004</p>
+                                <div class="social-buttons">
+                                    <a href="https://www.instagram.com/Barcode.Tin" target="_blank" class="btn-social"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="https://x.com/BarcodeTin" target="_blank" class="btn-social"><i class="fa-brands fa-x-twitter"></i></a>
+                                    <a href="https://www.tiktok.com/@barcode.tin" target="_blank" class="btn-social"><i class="fa-brands fa-tiktok"></i></a>
+                                </div>
                             </div>
                         </div>
 
                         <div class="member-card m-keen">
-                            <img src="images/ofc/IMG_3153.JPG" alt="Keen" onerror="this.src='https://placehold.co/150x150/FFF/AEE2FF?text=Keen'">
-                            <h3>Keen</h3>
-                            <span class="m-role">แฉกที่ 2 : Love</span>
-                            <p>คีน สุวิจักขณ์ ปิยะนพโรจน์<br>เกิด: 18 ส.ค. 2005</p>
-                            <div class="social-buttons">
-                                <a href="https://www.instagram.com/keenkeno" target="_blank" class="btn-social"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="https://x.com/keenkeno_sp" target="_blank" class="btn-social"><i class="fa-brands fa-x-twitter"></i></a>
-                                <a href="https://www.tiktok.com/@keen_keno" target="_blank" class="btn-social"><i class="fa-brands fa-tiktok"></i></a>
+                            <img src="images/ofc/IMG_3153.JPG" alt="Keen" onerror="this.src='https://placehold.co/150x200/FFF/AEE2FF?text=Keen'">
+                            <div class="member-info">
+                                <h3>Keen</h3>
+                                <span class="m-role">แฉกที่ 2 : Love</span>
+                                <p>คีน สุวิจักขณ์ ปิยะนพโรจน์<br>เกิด: 18 ส.ค. 2005</p>
+                                <div class="social-buttons">
+                                    <a href="https://www.instagram.com/keenkeno" target="_blank" class="btn-social"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="https://x.com/keenkeno_sp" target="_blank" class="btn-social"><i class="fa-brands fa-x-twitter"></i></a>
+                                    <a href="https://www.tiktok.com/@keen_keno" target="_blank" class="btn-social"><i class="fa-brands fa-tiktok"></i></a>
+                                </div>
                             </div>
                         </div>
 
                         <div class="member-card m-ashi">
-                            <img src="images/ofc/IMG_3154.JPG" alt="Ashi" onerror="this.src='https://placehold.co/150x150/FFF/CDB4DB?text=Ashi'">
-                            <h3>Ashi</h3>
-                            <span class="m-role">แฉกที่ 3 : Luck</span>
-                            <p>อชิ พีระกานต์ เตียวสุวรรณ<br>เกิด: 28 พ.ค. 2005</p>
-                            <div class="social-buttons">
-                                <a href="https://www.instagram.com/aliazhl_" target="_blank" class="btn-social"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="https://x.com/aliazhl" target="_blank" class="btn-social"><i class="fa-brands fa-x-twitter"></i></a>
-                                <a href="https://www.tiktok.com/@aaliazhl_" target="_blank" class="btn-social"><i class="fa-brands fa-tiktok"></i></a>
+                            <img src="images/ofc/IMG_3154.JPG" alt="Ashi" onerror="this.src='https://placehold.co/150x200/FFF/CDB4DB?text=Ashi'">
+                            <div class="member-info">
+                                <h3>Ashi</h3>
+                                <span class="m-role">แฉกที่ 3 : Luck</span>
+                                <p>อชิ พีระกานต์ เตียวสุวรรณ<br>เกิด: 28 พ.ค. 2005</p>
+                                <div class="social-buttons">
+                                    <a href="https://www.instagram.com/aliazhl_" target="_blank" class="btn-social"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="https://x.com/aliazhl" target="_blank" class="btn-social"><i class="fa-brands fa-x-twitter"></i></a>
+                                    <a href="https://www.tiktok.com/@aaliazhl_" target="_blank" class="btn-social"><i class="fa-brands fa-tiktok"></i></a>
+                                </div>
                             </div>
                         </div>
 
                         <div class="member-card m-aungpao">
-                            <img src="images/ofc/IMG_3155.JPG" alt="Aungpao" onerror="this.src='https://placehold.co/150x150/FFF/B7E4C7?text=Aungpao'">
-                            <h3>Aungpao</h3>
-                            <span class="m-role">แฉกที่ 4 : Faith</span>
-                            <p>อังเปา โอชิริส สุวรรณชีพ<br>เกิด: 20 มี.ค. 2006</p>
-                            <div class="social-buttons">
-                                <a href="https://www.instagram.com/20aungpao" target="_blank" class="btn-social"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="https://x.com/20aungpao" target="_blank" class="btn-social"><i class="fa-brands fa-x-twitter"></i></a>
-                                <a href="https://www.tiktok.com/@20aungpao" target="_blank" class="btn-social"><i class="fa-brands fa-tiktok"></i></a>
+                            <img src="images/ofc/IMG_3155.JPG" alt="Aungpao" onerror="this.src='https://placehold.co/150x200/FFF/B7E4C7?text=Aungpao'">
+                            <div class="member-info">
+                                <h3>Aungpao</h3>
+                                <span class="m-role">แฉกที่ 4 : Faith</span>
+                                <p>อังเปา โอชิริส สุวรรณชีพ<br>เกิด: 20 มี.ค. 2006</p>
+                                <div class="social-buttons">
+                                    <a href="https://www.instagram.com/20aungpao" target="_blank" class="btn-social"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="https://x.com/20aungpao" target="_blank" class="btn-social"><i class="fa-brands fa-x-twitter"></i></a>
+                                    <a href="https://www.tiktok.com/@20aungpao" target="_blank" class="btn-social"><i class="fa-brands fa-tiktok"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                   </div>
                 </section>
 
                 <!-- หน้าที่ 4: DISCOGRAPHY -->
