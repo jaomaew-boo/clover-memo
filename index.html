@@ -1511,35 +1511,35 @@
                                     <img src="images/ofc/IMG_6794.JPG" alt="Debut" onerror="this.src='https://placehold.co/400x250/FDFBF7/B7E4C7?text=Debut+Photos'">
                                 </div>
                                 <div class="folder-meta">
-                                    <span class="folder-name">🍀 Debut & Concepts</span>
-                                    <span class="folder-count">3 รูป</span>
+                                    <span class="folder-name">🍀 Debut</span>
+                                    <span class="folder-count">9 รูป</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- โฟลเดอร์ 2 -->
-                        <div class="folder-card f-pink" onclick="openFolder('stage')">
+                        <div class="folder-card f-pink" onclick="openFolder('concepts')">
                            <div class="folder-tab"></div>
                             <div class="folder-body">
                                 <div class="folder-thumb">
-                    <img src="images/gallery/stage1.jpg" alt="Stage" onerror="this.src='https://placehold.co/400x250/FDFBF7/FFB7CE?text=Stage+Moments'">
+                    <img src="images/gallery/stage1.jpg" alt="Concepts" onerror="this.src='https://placehold.co/400x250/FDFBF7/FFB7CE?text=soon'">
                                 </div>
                                 <div class="folder-meta">
-                                    <span class="folder-name">🎤 Stage & Concerts</span>
+                                    <span class="folder-name">🎞️ Concepts</span>
                                     <span class="folder-count">9 รูป</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- โฟลเดอร์ 3 -->
-                        <div class="folder-card f-blue" onclick="openFolder('behind')">
+                        <div class="folder-card f-blue" onclick="openFolder('stage')">
                             <div class="folder-tab"></div>
                             <div class="folder-body">
                                 <div class="folder-thumb">
-                                    <img src="images/gallery/behind1.jpg" alt="Behind" onerror="this.src='https://placehold.co/400x250/FDFBF7/AEE2FF?text=Behind+Scenes'">
+                                    <img src="images/gallery/behind1.jpg" alt="Stage" onerror="this.src='https://placehold.co/400x250/FDFBF7/AEE2FF?text=soon'">
                                 </div>
                                 <div class="folder-meta">
-                                    <span class="folder-name">🎞️ Behind The Scenes</span>
+                                    <span class="folder-name">🎤 Stage</span>
                                     <span class="folder-count">2 รูป</span>
                                 </div>
                             </div>
@@ -1731,7 +1731,7 @@
         // --- 📁 ข้อมูลรูปภาพในแต่ละโฟลเดอร์ ---
         const galleryFolders = {
             debut: {
-                title: '🍀 Debut & Concepts',
+                title: '🍀 Debut',
                 photos: [
                     { src: 'images/ofc/IMG_6794.JPG', fallback: 'https://placehold.co/600x400/FDFBF7/B7E4C7?text=Debut+1', caption: 'Debut Day — 27 Nov 2025 🍀' },
                     { src: 'images/ofc/IMG_6793.JPG', fallback: 'https://placehold.co/600x400/FDFBF7/AEE2FF?text=Debut+2', caption: 'Barcode - Love' },
@@ -1744,19 +1744,20 @@
                     { src: 'images/ofc/IMG_3155.JPG', fallback: 'https://placehold.co/600x400/FDFBF7/FFB7CE?text=Debut+9', caption: 'สวัสดีค้าบ อังเปาครับฝากเนื้อฝากตัวด้วยนะ ไอเปาจะตั้งใจทำผลงานหลังจากนี้อย่างสุดความสามารถ เสมอมาและตลอดไป ด้วยรัก อิๆ🫶🏻' }
                 ]
             },
+            concepts: {
+                title: '🎞️ Concepts',
+                photos: [
+                    { src: 'images/gallery/stage1.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/FFB7CE?text=Concepts+1', caption: 'คนคุ้นคอย (Next To You) Concept Photo' },
+                    { src: 'images/gallery/stage2.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/FFD6A5?text=Concepts+2', caption: 'GOTCHA POP 4 CONCERT' },
+                    { src: 'images/gallery/stage3.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/CDB4DB?text=Concepts+3', caption: 'TPOP STAGE IN PARIS 🇫🇷' }
+                ]
+            },
             stage: {
-                title: '🎤 Stage & Concerts',
+                title: '🎤 Stage',
                 photos: [
                     { src: 'images/gallery/stage1.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/FFB7CE?text=Stage+1', caption: 'คนคุ้นคอย (Next To You) Concept Photo' },
                     { src: 'images/gallery/stage2.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/FFD6A5?text=Stage+2', caption: 'GOTCHA POP 4 CONCERT' },
                     { src: 'images/gallery/stage3.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/CDB4DB?text=Stage+3', caption: 'TPOP STAGE IN PARIS 🇫🇷' }
-                ]
-            },
-            behind: {
-                title: '🎞️ Behind The Scenes',
-                photos: [
-                    { src: 'images/gallery/behind1.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/AEE2FF?text=Behind+1', caption: 'เบื้องหลังการถ่ายทำ MV 🎬' },
-                    { src: 'images/gallery/behind2.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/B7E4C7?text=Behind+2', caption: 'ซ้อมเต้นก่อนขึ้นเวที 🕺🏻' }
                 ]
             },
             special: {
