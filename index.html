@@ -1051,7 +1051,7 @@
             gap: 8px;
             padding: 6px 14px 14px 14px;
             overflow-x: auto;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         .thumb-strip::-webkit-scrollbar { height: 5px; }
@@ -1925,6 +1925,9 @@
 
             thumbStrip.querySelectorAll('.thumb-item').forEach((t, i) => {
                 t.classList.toggle('active', i === currentSlide);
+                if (i === currentSlide) {
+                    t.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
             });
         }
 
