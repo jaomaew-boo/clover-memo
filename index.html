@@ -1083,6 +1083,48 @@
             .slide-nav-btn { width: 34px; height: 34px; font-size: 0.85rem; }
             .thumb-strip { justify-content: flex-start; }
         }
+
+        /* ให้วิดีโอและ YouTube อยู่ในกรอบสไลด์พอดีเหมือนรูปภาพ */
+        .slider-stage video,
+        .slider-stage iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border: none;
+            display: none;
+            background: #000;
+        }
+
+        .slide-nav-btn {
+            z-index: 5; /* ให้ปุ่มลูกศรอยู่เหนือวิดีโอเสมอ */
+        }
+
+        /* ไอคอน Play เล็กๆ บนแถบรูปย่อด้านล่าง เพื่อบอกว่าอันไหนคือวิดีโอ */
+        .thumb-wrap {
+            position: relative;
+            width: 58px;
+            height: 42px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .thumb-wrap .thumb-item {
+            width: 100%;
+            height: 100%;
+        }
+
+        .thumb-play-badge {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FFFFFF;
+            font-size: 0.75rem;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 6px;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -1670,6 +1712,8 @@
             <div class="slider-stage" id="sliderStage">
                 <button class="slide-nav-btn slide-prev" onclick="changeSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                 <img id="sliderImg" src="" alt="Gallery Photo">
+                <video id="sliderVideo" controls playsinline></video>
+                <iframe id="sliderYoutube" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <button class="slide-nav-btn slide-next" onclick="changeSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
             <div class="slide-caption" id="slideCaption"></div>
@@ -1800,8 +1844,8 @@
                 photos: [
                     { src: 'images/2/si1.jpeg', fallback: 'https://placehold.co/600x400/FDFBF7/FFB7CE?text=Together+1', caption: 'GMMTVFANIVAL2026xCLO_VER' },
                     { src: 'images/2/si2.jpeg', fallback: 'https://placehold.co/600x400/FDFBF7/FFB7CE?text=Together+1', caption: 'GMMTVFANIVAL2026xCLO_VER' },
-                    { src: 'images/2/si3.MP4', fallback: 'https://placehold.co/600x400/FDFBF7/FFB7CE?text=Together+1', caption: 'GMMTVFANIVAL2026xCLO_VER' },
-                    { src: 'images/2/si4.MP4', fallback: 'https://placehold.co/600x400/FDFBF7/FFD6A5?text=Together+2', caption: 'ขอบคุณทุกคนมากๆ นะครับที่มาหาพวกเรา ทั้งใน Fan Sign ครั้งแรกของ CLO\’VER รวมถึงมารวมพลกันเยอะเลยยยยย🥹 พวกผม 4 คนแฮปปี้มากๆ ถึงบ้านกันแล้วใช่มั๊ยค้าบบบบ ดีใจมากๆ ที่ได้เจอทุกคนนน ไว้เจอกันอีกเยอะๆ เลยนะคับ คืนนี้ฝันดีนะค้าบบบบ🫶🏻🍀💚' },
+                    { type: 'video', src: 'images/2/si3.MP4', caption: 'GMMTVFANIVAL2026xCLO_VER' },
+                    { type: 'video', src: 'images/2/si4.MP4', caption: 'ขอบคุณทุกคนมากๆ นะครับที่มาหาพวกเรา ทั้งใน Fan Sign ครั้งแรกของ CLO\’VER รวมถึงมารวมพลกันเยอะเลยยยยย🥹 พวกผม 4 คนแฮปปี้มากๆ ถึงบ้านกันแล้วใช่มั๊ยค้าบบบบ ดีใจมากๆ ที่ได้เจอทุกคนนน ไว้เจอกันอีกเยอะๆ เลยนะคับ คืนนี้ฝันดีนะค้าบบบบ🫶🏻🍀💚' },
                     { src: 'images/gallery/stage3.jpg', fallback: 'https://placehold.co/600x400/FDFBF7/CDB4DB?text=Together+3', caption: 'A' }
                 ]
             },
@@ -1905,6 +1949,17 @@
         let currentPhotos = [];
         let currentSlide = 0;
 
+        const sliderVideo = document.getElementById('sliderVideo');
+        const sliderYoutube = document.getElementById('sliderYoutube');
+
+        // ฟังก์ชันหยุดวิดีโอทั้งหมด
+        function stopGalleryMedia() {
+            sliderVideo.pause();
+            sliderVideo.removeAttribute('src');
+            sliderVideo.load();
+            sliderYoutube.src = '';
+        }
+
         function openFolder(folderKey) {
             const folder = galleryFolders[folderKey];
             if (!folder || !folder.photos.length) return;
@@ -1913,15 +1968,34 @@
             currentSlide = 0;
             galleryFolderTitle.textContent = folder.title;
 
-            // สร้างแถบรูปย่อด้านล่าง
             thumbStrip.innerHTML = '';
-            currentPhotos.forEach((photo, idx) => {
+            currentPhotos.forEach((item, idx) => {
+                const wrap = document.createElement('div');
+                wrap.className = 'thumb-wrap';
+                wrap.onclick = () => showSlide(idx);
+
                 const thumb = document.createElement('img');
-                thumb.src = photo.src;
                 thumb.className = 'thumb-item';
-                thumb.onerror = () => { thumb.src = photo.fallback; };
-                thumb.onclick = () => showSlide(idx);
-                thumbStrip.appendChild(thumb);
+
+                if (item.type === 'youtube') {
+                    thumb.src = item.thumb || `https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`;
+                } else if (item.type === 'video') {
+                    thumb.src = item.thumb || 'https://placehold.co/120x90/222/FFF?text=VIDEO';
+                } else {
+                    thumb.src = item.src;
+                    thumb.onerror = () => { thumb.src = item.fallback || ''; };
+                }
+
+                wrap.appendChild(thumb);
+
+                if (item.type === 'video' || item.type === 'youtube') {
+                    const badge = document.createElement('span');
+                    badge.className = 'thumb-play-badge';
+                    badge.innerHTML = '<i class="fa-solid fa-play"></i>';
+                    wrap.appendChild(badge);
+                }
+
+                thumbStrip.appendChild(wrap);
             });
 
             showSlide(0);
@@ -1930,12 +2004,28 @@
 
         function showSlide(index) {
             if (!currentPhotos.length) return;
-            currentSlide = (index + currentPhotos.length) % currentPhotos.length;
-            const photo = currentPhotos[currentSlide];
+            stopGalleryMedia();
 
-            sliderImg.onerror = () => { sliderImg.src = photo.fallback; };
-            sliderImg.src = photo.src;
-            slideCaption.textContent = photo.caption || '';
+            currentSlide = (index + currentPhotos.length) % currentPhotos.length;
+            const item = currentPhotos[currentSlide];
+
+            sliderImg.style.display = 'none';
+            sliderVideo.style.display = 'none';
+            sliderYoutube.style.display = 'none';
+
+            if (item.type === 'video') {
+                sliderVideo.src = item.src;
+                sliderVideo.style.display = 'block';
+            } else if (item.type === 'youtube') {
+                sliderYoutube.src = `https://www.youtube.com/embed/${item.videoId}`;
+                sliderYoutube.style.display = 'block';
+            } else {
+                sliderImg.onerror = () => { sliderImg.src = item.fallback || ''; };
+                sliderImg.src = item.src;
+                sliderImg.style.display = 'block';
+            }
+
+            slideCaption.textContent = item.caption || '';
             slideCounter.textContent = `${currentSlide + 1} / ${currentPhotos.length}`;
 
             thumbStrip.querySelectorAll('.thumb-item').forEach((t, i) => {
@@ -1951,6 +2041,7 @@
         }
 
         function closeGallery() {
+            stopGalleryMedia();
             galleryModal.classList.remove('open');
         }
 
